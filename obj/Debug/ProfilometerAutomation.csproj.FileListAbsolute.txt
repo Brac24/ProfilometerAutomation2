@@ -1,0 +1,26 @@
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\bin\Debug\ProfilometerAutomation.exe.config
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.csprojResolveAssemblyReference.cache
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.Properties.Resources.resources
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.csproj.GenerateResource.Cache
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\bin\Debug\ProfilometerAutomation.exe
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\bin\Debug\ProfilometerAutomation.pdb
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\bin\Debug\GalilWidgets.dll
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.exe
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.pdb
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.Form1.resources
+C:\Users\cbracamontes\Downloads\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.csproj.ResolveComReference.cache
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\bin\Debug\ProfilometerAutomation.exe.config
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.csproj.ResolveComReference.cache
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.exe
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.pdb
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.csprojResolveAssemblyReference.cache
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.Form1.resources
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.Properties.Resources.resources
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.csproj.GenerateResource.Cache
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\bin\Debug\ProfilometerAutomation.exe
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\bin\Debug\ProfilometerAutomation.pdb
+\\ati-main\ATI-FR\cbracamontes\Desktop\ProfilometerAutomation\ProfilometerAutomation\bin\Debug\GalilWidgets.dll
+C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomation\bin\Debug\ProfilometerAutomation.exe.config
+C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.csproj.ResolveComReference.cache
+C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.exe
+C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomation\obj\Debug\ProfilometerAutomation.pdb
