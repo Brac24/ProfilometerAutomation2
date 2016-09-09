@@ -22,23 +22,8 @@ namespace ProfilometerAutomation
 
         MotionController controller;
 
-        //a;sdkjfl
-
+      
         bool portsButtonClicked = false;
-
-        #region
-        /*
-        //Make a vallidation method that displays
-        // a message box
-        string message = "Open the ports first you fool";
-        string caption = "error";
-        MessageBoxButtons button = MessageBoxButtons.OK;
-
-        string errorMissingInitial = "Program Missing #INITIAL Label or Program is already running";
-        StringBuilder builder = new StringBuilder();
-        */
-        #endregion
-
 
         string profResult = String.Empty;
 
@@ -88,75 +73,7 @@ namespace ProfilometerAutomation
 
             //Acknowledge this button has been clicked
             portsButtonClicked = true;
-            #region commented out old code
-            /*
-            string[] ArrayComPortsNames = null;
-            int index = -1;
-            string ComPortName = null;
-
-            //Acknowledge this button has been clicked
-            portsButtonClicked = true;
-            //Com Ports
-            ArrayComPortsNames = SerialPort.GetPortNames();
-            do
-            {
-                index += 1;
-                cboPorts.Items.Add(ArrayComPortsNames[index]);
-
-
-            } while (!((ArrayComPortsNames[index] == ComPortName) || (index == ArrayComPortsNames.GetUpperBound(0))));
-            Array.Sort(ArrayComPortsNames);
-
-            if (index == ArrayComPortsNames.GetUpperBound(0))
-            {
-                ComPortName = ArrayComPortsNames[0];
-            }
-            //get first item print in text
-            cboPorts.Text = ArrayComPortsNames[0];
-            //Baud Rate
-            cboBaudRate.Items.Add(300);
-            cboBaudRate.Items.Add(600);
-            cboBaudRate.Items.Add(1200);
-            cboBaudRate.Items.Add(2400);
-            cboBaudRate.Items.Add(9600);
-            cboBaudRate.Items.Add(14400);
-            cboBaudRate.Items.Add(19200);
-            cboBaudRate.Items.Add(38400);
-            cboBaudRate.Items.Add(57600);
-            cboBaudRate.Items.Add(115200);
-            cboBaudRate.Items.ToString();
-            //9600 Baud Rate as default
-            cboBaudRate.Text = cboBaudRate.Items[4].ToString();
-            //Data Bits
-            cboDataBits.Items.Add(7);
-            cboDataBits.Items.Add(8);
-            //8 data bits as default 
-            cboDataBits.Text = cboDataBits.Items[1].ToString();
-
-            //Stop Bits
-            cboStopBits.Items.Add("One");
-            cboStopBits.Items.Add("OnePointFive");
-            cboStopBits.Items.Add("Two");
-            //get the first item print in the text
-            cboStopBits.Text = cboStopBits.Items[0].ToString();
-            //Parity 
-            cboParity.Items.Add("None");
-            cboParity.Items.Add("Even");
-            cboParity.Items.Add("Mark");
-            cboParity.Items.Add("Odd");
-            cboParity.Items.Add("Space");
-            //get the first item print in the text
-            cboParity.Text = cboParity.Items[0].ToString();
-            //Handshake
-            cboHandShaking.Items.Add("None");
-            cboHandShaking.Items.Add("XOnXOff");
-            cboHandShaking.Items.Add("RequestToSend");
-            cboHandShaking.Items.Add("RequestToSendXOnXOff");
-            //get the first item print it in the text 
-            cboHandShaking.Text = cboHandShaking.Items[0].ToString();
-            */
-            #endregion
-
+            
         }
 
         
