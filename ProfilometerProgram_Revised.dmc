@@ -22,13 +22,25 @@ EN
 inches = offset*inch;  'Holds total steps needed for specified inches
 degrees = degree*rStep;
 rotation = rotation+1;  'Accounts for first position which doesnt rotate
-DM pos1[size];
 DM posA[size];
 DM posB[size];
 DM posC[rotation];
 MG "DONE1";
 JP #JOYS
 EN
+
+#REINIT
+inches = offset*inch;
+degress = degree*rStep;
+rotation = rotation+1;
+DM posA[size];
+DM posB[size];
+DM posC[rotation];
+MG "DONE1";
+CB 5;
+JP #SETPOS1;
+EN
+
 
 #INITPOS
 a = 56;
@@ -134,8 +146,8 @@ IF (vinz < -DBAND)
 vinz = vinz + DBAND
 ENDIF
 ENDIF
-JS#SETPOS1,((@IN[17]=0)|(@OUT[02])); 'OUT[2] SET POS
-JS#MOVPOS,((@IN[19]=0)|(@OUT[03])); 'OUT[3] START AUTO
+JS#SETPOS1,((@IN[17]=0)|(@OUT[02]));  'OUT[2] SET POS
+JS#REINIT,(((@IN[17]=0)|(@OUT[02])) & (@OUT[05])); 
 vinx=vinx*XSCALE
 viny=viny*YSCALE
 vinz=vinz*ZSCALE
@@ -143,6 +155,9 @@ JG vinx, viny, vinz
 JP#LOOP
 EN
 
+#SETPOS0
+MG "IT GOT IT"
+EN;
 'This will allow to set all points with JoyStick
 #SETPOS
 IF (i>size)

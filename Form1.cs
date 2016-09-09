@@ -24,7 +24,7 @@ namespace ProfilometerAutomation
 
       
         bool portsButtonClicked = false;
-
+        bool canReInit = false;
         string profResult = String.Empty;
 
         public Form1()
@@ -191,7 +191,7 @@ namespace ProfilometerAutomation
                 rotationStep = 0;
             }
             
-            controller.CheckProgramLoaded(comboBoxMeasurePoints.SelectedIndex+1,inches,rotations,rotationStep);
+            canReInit = controller.CheckProgramLoaded(comboBoxMeasurePoints.SelectedIndex+1,inches,rotations,rotationStep);
         }
 
         private void rtbIncoming_TextChanged(object sender, EventArgs e)
@@ -235,8 +235,8 @@ namespace ProfilometerAutomation
             if (!controller.InMotion(e))
             {
                 System.Threading.Thread.Sleep(1000);
-                profilometer.Start();               //Begin profilometer measurement
-                profilometer.results(rtbIncoming); //Display contents of results to rich text box
+                //profilometer.Start();               //Begin profilometer measurement
+                //profilometer.results(rtbIncoming); //Display contents of results to rich text box
                 controller.Resume();               //Resume controller to next position
             }
         }
@@ -326,7 +326,57 @@ namespace ProfilometerAutomation
 
         private void comboBoxMeasurePoints_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.CommandController("DA *[]"); //Will deallocate motion controller arrays to allow for a new set
+            //The first time parameter is changed by user is when program first begins
+            //therefore we do not want the controller reinitializing arrays or variables
+            if(canReInit)
+            {
+                controller.CommandController("DA *[]"); //Will deallocate motion controller arrays to allow for a new set
+                controller.CommandController("SB 5;");
+                controller.CommandController("size = " + comboBoxMeasurePoints.SelectedIndex+1); //Will initialize the size array of controller to what 
+                                                                                                   //is in the X Points drop down box. 0 based index
+            }
+            if (comboBoxMeasurePoints.SelectedIndex == 0)
+            {
+                textBoxLengthBetweenPointsX.Enabled = false;
+            }
+            else
+                textBoxLengthBetweenPointsX.Enabled = true;
+
+        }
+
+        private void textBoxLengthBetweenPointsX_TextChanged(object sender, EventArgs e)
+        {
+
+            //When number is changed this command will re-initialize variable
+            //Remember to Error check to only allow numbers
+            //Also think about possibly putting a threshold lenght of inches
+            if(canReInit && textBoxLengthBetweenPointsX.Enabled)
+            {
+                controller.CommandController("offset = " + textBoxLengthBetweenPointsX);
+            }
+            else if(canReInit && !textBoxLengthBetweenPointsX.Enabled)
+            {
+                controller.CommandController("offset = 0");
+            }
+            
+        }
+
+        private void textBoxRotations_TextChanged(object sender, EventArgs e)
+        {
+            if(canReInit)
+            {
+                controller.CommandController("rotation = " + textBoxRotations);
+            }
+            
+        }
+
+        private void textBoxLengthBetweenPointsDegrees_TextChanged(object sender, EventArgs e)
+        {
+            if(canReInit)
+            {
+                controller.CommandController("rStep = " + textBoxLengthBetweenPointsDegrees);
+            }
+            
         }
     }
 }
