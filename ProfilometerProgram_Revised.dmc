@@ -15,12 +15,9 @@ rStep=0; 'How many degrees each rotations consists of
 i=0;
 j=0;
 MG "RESETTING POSITION"
-'PA 0,0,0;
-'BG ABC;
-'AM
 MG "Finished Initializing"
-'JP #JOYS;
 EN
+
 #INITARR
 inches = offset*inch;  'Holds total steps needed for specified inches
 degrees = degree*rStep;
@@ -32,6 +29,7 @@ DM posC[rotation];
 MG "DONE1";
 JP #JOYS
 EN
+
 #INITPOS
 a = 56;
 PR ,-600000;
@@ -46,7 +44,6 @@ BG B;
 AM B;
 MG "BACK TO INITIAL POSITION"
 EN
-
 
 
 'This routine will set upper and lower limit 
