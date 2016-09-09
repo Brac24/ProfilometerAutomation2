@@ -28,7 +28,7 @@ namespace ProfilometerAutomation
 
         GWComs gwComs1 = new GWComs();
         
-
+        
         
         //Make a vallidation method that displays
         // a message box
