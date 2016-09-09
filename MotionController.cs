@@ -10,8 +10,7 @@ namespace ProfilometerAutomation
 {
     public class MotionController
     {
-       //If you succeeded you will see this message doggy
-       //hello from the past
+       
         private double locationX;
         private double locationY;
         private double locationZ;
