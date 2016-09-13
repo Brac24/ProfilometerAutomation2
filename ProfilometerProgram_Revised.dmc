@@ -1,0 +1,266 @@
+'Initialize Speeds,Accelerations, and Deccelerations
+'Of all axes
+#INITIAL
+MG "Initializing Parameters"
+SP 80000,600000,50000;
+AC 10000,50000,50000;
+DC 10000,50000,50000;
+'variables: size, rotation, offset, and rStep
+'are initialized and declared through a controller command
+'in the Form1.cs file. Variables are updated from the form
+inch = 7055;   'Initializes and defines an inch in steps
+degree = 389;  'Initializes and defines 1 degree rotation in steps
+rev = 50000;
+i=0;
+j=0;
+MG "Finished Initializing"
+EN
+
+#INITARR
+inches = offset*inch;  'Holds total steps needed for specified inches
+degrees = degree*rStep;
+rotation = rotation+1;  'Accounts for first position which doesnt rotate
+'Arrays are also created and updated through the file Form1.cs
+'in its various methods. 
+'Arrays: posA[size], posB[size], posC[rotation]
+'is continuously updated in the windows form
+JP #JOYS
+EN
+
+
+'This routine will set upper and lower limit 
+'parameters for the y axis
+#SETLIMY
+DP 0,0,0; 'This is meant to set current position to 0's
+MG "IN #SETLIMY";
+WT 500;
+EN
+
+'Routine will remove the tool slightly above the 
+'part and jump to the next position
+#REMOVE
+SP ,200000;
+AC ,200000;
+DC ,200000;
+PR ,-400000;
+BG B;
+MG "Removing profilometer"
+AM B;
+MG "DONE REMOVING"
+EN;
+
+'Routine will move negative direction
+'and place profilometer on part
+#MOVENEG
+PR -10000;
+PA ,0;
+BG A;
+MG "RUNNING #MOVENEG"
+AM A;
+BG B;
+AM B;
+MG "DONE WITH #MOVENEG"
+EN
+
+
+
+'Begin with the JoyStick program to allow the user
+'Set limit swtich on the Y axis.
+'User should place profilometer so that it is 
+'level to the part
+
+'********PLACE JOYSTICK CODE HERE************
+#JOYS
+MG "Set Your Points with the JoyStick";
+CB @OUT[1];
+JoyFlag = 1
+DBAND = .2
+XSCALE = 30000
+YSCALE = 100000
+ZSCALE = 100000
+'AC300000,1000000,1000000
+'DC300000,1000000,1000000
+JG 0,0,0
+BG ABC
+#LOOP
+vinx=-@AN[1]+2.5
+viny=@AN[2]-2.5
+vinz=@AN[3]-2.5
+IF (vinx>= -DBAND) & (vinx<= DBAND)
+vinx=0
+ELSE 
+IF (vinx > DBAND)
+vinx = vinx - DBAND
+ENDIF
+IF (vinx < -DBAND)
+vinx = vinx + DBAND
+ENDIF
+ENDIF
+IF (viny>= -DBAND) & (viny<= DBAND)
+viny=0
+ELSE 
+IF (viny > DBAND)
+viny = viny - DBAND
+ENDIF
+IF (viny < -DBAND)
+viny = viny + DBAND
+ENDIF
+ENDIF
+IF (vinz>= -DBAND) & (vinz<= DBAND)
+vinz=0
+ELSE 
+IF (vinz > DBAND)
+vinz = vinz - DBAND
+ENDIF
+IF (vinz < -DBAND)
+vinz = vinz + DBAND
+ENDIF
+ENDIF
+JS#SETPOS1,((@IN[17]=0)|(@OUT[02]));  'OUT[2] SET POS
+vinx=vinx*XSCALE
+viny=viny*YSCALE
+vinz=vinz*ZSCALE
+JG vinx, viny, vinz
+JP#LOOP
+EN
+
+'This will allow to set all points with JoyStick
+#SETPOS
+IF (i>size)
+MG "YOU ARE OUT OF POSITION SAVES"
+i=size;
+JP #END2
+ENDIF
+MG "YOU DID IT AGAIN";
+'Assigning the current position to each array
+posA[i] = _TDA; 'Sets current X position
+posB[i] = _TDB; 'Sets current Y position
+posC[i] = _TDC; 'Sets current Z position(part being measured)
+MG "SETTING POSITION",,i;
+i = i+1;
+WT 500;
+CB @OUT[02]; 'Clear the signal that sets the position
+#END2
+EN
+
+'Used when not setting each individual point through JoyStick
+#SETPOS1
+#SETAB
+MG "SETTING AB ",,i;
+posA[i] = _TDA+(i*inches);
+posB[i] = _TDB;
+i = i+1;
+JP #SETAB, i<size;
+
+#SETC
+MG "SETTING C ",,j;
+posC[j] = _TDC+(j*degrees);
+j = j+1;
+JP #SETC, j<rotation;
+i = 0;   'Program will begin at first A position recorded
+j = 0;   'Program should begin at first C position
+
+'This routine goes through each 
+'saved position. Once it has measured
+'the last position it returns back to 
+'joystick control and return to first position
+#MOVPOS
+ST;
+IF ((i>=size)&(j<rotation))
+MG "THAT WAS THE LAST POSITION";
+IF ((i=size)&(j=(rotation-1)))
+i=0;
+j=0;
+MG "DONEZO";
+JS #REMOVE;
+PA posA[i],posB[i];
+BG A;
+AM A;
+BG B;
+AM B;
+JP #JOYS
+ENDIF
+i=0;
+j=j+1;
+ENDIF
+
+MG "MOVING TO POSITION ",,i;
+'JoyFlag = 0;
+SP 100000,20000,20000;
+CB @OUT[03]; 'Clear signal that begins the automation
+JS #REMOVE;
+AM;
+MG "DONE?";
+PA posA[i],posB[i],posC[j];
+MG "EXECUTED";
+BG A;
+AM A;
+BG C;
+AM C;
+BG B;
+AM B;
+MG "AFTER EXECUTION";
+AM;
+i=i+1;
+MG "HALTING WHILE MEASURING";
+HX;
+#RESUME
+'JoyFlag = 1;
+WT 500;
+MG "Oh Youre Good";
+JP #MOVPOS;
+EN
+
+
+#LIMSWI
+JP#END, JoyFlag = 0
+JP#LFX, _LFA = 0
+JP#LRX, _LRA = 0
+JP#LFY, _LFB = 0
+JP#LRY, _LRB = 0
+JP#LFZ, _LFC = 0
+JP#LRZ, _LRC = 0
+JP#END`
+#LFX
+WT500
+SP30000
+PR-2000;BGA;AMA
+JG0
+BGA
+JP#END
+#LRX
+WT500
+SP30000
+PR2000;BGA;AMA
+JG0
+BGA
+JP#END
+#LFY
+WT500
+SP,30000
+PR,-20000;BGB;AMB
+JG,0
+BGB
+JP#END
+#LRY
+WT500
+SP,30000
+PR,20000;BGB;AMB
+JG,0
+BGB
+JP#END
+#LFZ
+WT500
+SP,,30000
+PR,,-20000;BGC;AMC
+JG,,0
+BGC
+JP#END
+#LRZ
+WT500
+SP,,30000
+PR,,20000;BGC;AMC
+JG,,0
+BGC
+#END
+RE

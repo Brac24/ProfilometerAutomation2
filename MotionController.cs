@@ -64,9 +64,10 @@ namespace ProfilometerAutomation
         /// <param name="inchOffset">The lenght between each point in inches</param>
         /// <param name="rotations">The number of times the part will rotate</param>
         /// <param name="rotationStep">Angle at which the part will rotate each time in degrees</param>
-        public void CheckProgramLoaded(int points, int inchOffset, int rotations, int rotationStep)
+        public bool CheckProgramLoaded(int points, int inchOffset, int rotations, int rotationStep)
         {
             bool run = true; // Will remove this
+            bool initialized = false;
            
             if (run)
             {
@@ -94,6 +95,8 @@ namespace ProfilometerAutomation
 
                     CommandController(command2); //Declare arrays and a few parameters
 
+                    initialized = true;
+
                 }
                 catch (Exception error)
                 {
@@ -108,6 +111,8 @@ namespace ProfilometerAutomation
             }
             else
                 MessageBox.Show(message, caption, button);
+
+            return initialized;
         }
 
         public void CloseController()
@@ -135,6 +140,7 @@ namespace ProfilometerAutomation
         public string CommandController(string command)
         {
             return gwComs1.GWCommand(ref command);
+            
         }
         
         /// <summary>

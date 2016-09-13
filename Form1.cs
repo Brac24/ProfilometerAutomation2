@@ -24,7 +24,7 @@ namespace ProfilometerAutomation
 
       
         bool portsButtonClicked = false;
-
+        bool canReInit = false;
         string profResult = String.Empty;
 
         public Form1()
@@ -62,6 +62,11 @@ namespace ProfilometerAutomation
             btnPorts.Hide();
             btnPortState.Hide();
             btnHello.Hide();
+            controller.CommandController("DA size");
+            controller.CommandController("DA *[]");
+            controller.CommandController("DA offset");
+            controller.CommandController("DA rotation");
+            controller.CommandController("DA rStep");
 
 
         }
@@ -191,7 +196,7 @@ namespace ProfilometerAutomation
                 rotationStep = 0;
             }
             
-            controller.CheckProgramLoaded(comboBoxMeasurePoints.SelectedIndex+1,inches,rotations,rotationStep);
+            canReInit = controller.CheckProgramLoaded(comboBoxMeasurePoints.SelectedIndex+1,inches,rotations,rotationStep);
         }
 
         private void rtbIncoming_TextChanged(object sender, EventArgs e)
@@ -235,8 +240,8 @@ namespace ProfilometerAutomation
             if (!controller.InMotion(e))
             {
                 System.Threading.Thread.Sleep(1000);
-                profilometer.Start();               //Begin profilometer measurement
-                profilometer.results(rtbIncoming); //Display contents of results to rich text box
+                //profilometer.Start();               //Begin profilometer measurement
+                //profilometer.results(rtbIncoming); //Display contents of results to rich text box
                 controller.Resume();               //Resume controller to next position
             }
         }
@@ -324,9 +329,122 @@ namespace ProfilometerAutomation
 
         }
 
-        private void comboBoxMeasurePoints_SelectedIndexChanged(object sender, EventArgs e)
+      
+        private void comboBoxMeasurePoints_TextChanged(object sender, EventArgs e)
         {
-            controller.CommandController("DA *[]"); //Will deallocate motion controller arrays to allow for a new set
+            controller.CommandController("DA posA[0]");
+            controller.CommandController("DA posB[0]");
+            controller.CommandController("size = " + comboBoxMeasurePoints.Text);
+            controller.CommandController("DM posA[size]");
+            controller.CommandController("DM posB[size]");
+
+            //Add checks for anything possible or simply ignore certain keys
+            if (comboBoxMeasurePoints.Text == "")
+            {
+
+            }
+            else if (Convert.ToInt16(comboBoxMeasurePoints.Text) <= 1)
+            {
+                //This check does not allow any X points less than 1
+                if(Convert.ToInt16(comboBoxMeasurePoints.Text) < 1)
+                {
+                    comboBoxMeasurePoints.Text = "1";
+                }
+
+
+                textBoxLengthBetweenPointsX.Text = "0";          //This will change the offset variable in the controller to 0 since there is only 1 point
+                textBoxLengthBetweenPointsX.Enabled = false;     //Disable length between points because there is only 1 point in this case
+            }
+            else if(Convert.ToInt16(comboBoxMeasurePoints.Text) > 1)
+            {
+                //If more than one X point dont allow a 0 inches between points
+                //you cannot have 0 inches between 2 points
+                if (textBoxLengthBetweenPointsX.Text == "0")
+                {
+                    textBoxLengthBetweenPointsX.Text = "1"; //Set to minimum of 1 if 0
+                }
+            }
+
+               
+            
+                
+
+            else
+                textBoxLengthBetweenPointsX.Enabled = true;
         }
+
+        private void textBoxLengthBetweenPointsX_TextChanged(object sender, EventArgs e)
+        {
+            
+                controller.CommandController("offset = " + textBoxLengthBetweenPointsX.Text);
+            
+           
+            
+
+            /*
+            //When number is changed this command will re-initialize variable
+            //Remember to Error check to only allow numbers
+            //Also think about possibly putting a threshold lenght of inches
+            if(canReInit && textBoxLengthBetweenPointsX.Enabled)
+            {
+                controller.CommandController("offset = " + textBoxLengthBetweenPointsX);
+            }
+            else if(canReInit && !textBoxLengthBetweenPointsX.Enabled)
+            {
+                controller.CommandController("offset = 0");
+            }
+            */
+            
+        }
+
+        private void textBoxRotations_TextChanged(object sender, EventArgs e)
+        {
+            if(textBoxRotations.Text == "")
+            {
+
+            }
+            else if (textBoxRotations.Text == "0")
+            {
+                textBoxLengthBetweenPointsDegrees.Text = "0";
+                textBoxLengthBetweenPointsDegrees.Enabled = false;
+            }
+            else if(Convert.ToInt16(textBoxRotations.Text)>0)
+            {
+                if(textBoxLengthBetweenPointsDegrees.Text == "0")
+                {
+                    textBoxLengthBetweenPointsDegrees.Text = "1";
+                }
+                
+                textBoxLengthBetweenPointsDegrees.Enabled = true;
+            }
+            else
+                textBoxLengthBetweenPointsDegrees.Enabled = true;
+
+            if(textBoxRotations.Text != "")
+            {
+                controller.CommandController("DA posC[0]");
+                controller.CommandController("rotation = " + (Convert.ToInt32(textBoxRotations.Text) + 1));
+                controller.CommandController("DM posC[rotation]");
+            }
+            
+
+
+
+        }
+
+        private void textBoxLengthBetweenPointsDegrees_TextChanged(object sender, EventArgs e)
+        {
+           
+                controller.CommandController("rStep = " + textBoxLengthBetweenPointsDegrees.Text);
+            
+            
+        }
+
+        private void gwSettings1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+       
     }
 }
