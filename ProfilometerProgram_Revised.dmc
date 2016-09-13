@@ -13,13 +13,13 @@ degree = 389;  'Initializes and defines 1 degree rotation in steps
 rev = 50000;
 i=0;
 j=0;
+DM size[1];
+DM rotation[1];
 MG "Finished Initializing"
+JP #INITVAR;
 EN
 
-#INITARR
-inches = offset*inch;  'Holds total steps needed for specified inches
-degrees = degree*rStep;
-rotation = rotation+1;  'Accounts for first position which doesnt rotate
+#INITVAR
 'Arrays are also created and updated through the file Form1.cs
 'in its various methods. 
 'Arrays: posA[size], posB[size], posC[rotation]
@@ -126,9 +126,9 @@ EN
 
 'This will allow to set all points with JoyStick
 #SETPOS
-IF (i>size)
+IF (i>size[0])
 MG "YOU ARE OUT OF POSITION SAVES"
-i=size;
+i=size[0];
 JP #END2
 ENDIF
 MG "YOU DID IT AGAIN";
@@ -150,15 +150,20 @@ MG "SETTING AB ",,i;
 posA[i] = _TDA+(i*inches);
 posB[i] = _TDB;
 i = i+1;
-JP #SETAB, i<size;
+JP #SETAB, i<size[0];
 
 #SETC
 MG "SETTING C ",,j;
 posC[j] = _TDC+(j*degrees);
 j = j+1;
-JP #SETC, j<rotation;
+JP #SETC, j<rotation[0];
 i = 0;   'Program will begin at first A position recorded
 j = 0;   'Program should begin at first C position
+MG "UPLOADING ARRAYS";
+QU posA[],0,size-1,1;
+QU posB[],0,size-1,1;
+QU posC[],0,rotation-1,1;
+
 
 'This routine goes through each 
 'saved position. Once it has measured
@@ -166,9 +171,9 @@ j = 0;   'Program should begin at first C position
 'joystick control and return to first position
 #MOVPOS
 ST;
-IF ((i>=size)&(j<rotation))
+IF ((i>=size[0])&(j<rotation[0]))
 MG "THAT WAS THE LAST POSITION";
-IF ((i=size)&(j=(rotation-1)))
+IF ((i=size[0])&(j=(rotation[0]-1)))
 i=0;
 j=0;
 MG "DONEZO";

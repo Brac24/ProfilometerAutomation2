@@ -64,38 +64,20 @@ namespace ProfilometerAutomation
         /// <param name="inchOffset">The lenght between each point in inches</param>
         /// <param name="rotations">The number of times the part will rotate</param>
         /// <param name="rotationStep">Angle at which the part will rotate each time in degrees</param>
-        public bool CheckProgramLoaded(int points, int inchOffset, int rotations, int rotationStep)
+        public void CheckProgramLoaded()
         {
             bool run = true; // Will remove this
-            bool initialized = false;
+            
            
             if (run)
             {
                 string command = "XQ#INITIAL"; 
-                string command2 = "XQ#INITARR";
-               
-
+         
                 try
                 {
                     CommandController(command); //Initializes a lot of the variables
-                   
                     
-                    CommandController("size = " + points); //Will re-initialize the size variable
 
-                    //This is a check for the inchOffset user input
-                    //checking if the value is empty
-                    //Should also check the other user inputs
-                    if(inchOffset != 0)
-                    {
-                        CommandController("offset = " + inchOffset); //Re-initialize offset variable
-                    }
-                    CommandController("rotation = " + rotations); //re-initialize rotation variable
-                    
-                    CommandController("rStep = " + rotationStep); //re-initialize rStep variable
-
-                    CommandController(command2); //Declare arrays and a few parameters
-
-                    initialized = true;
 
                 }
                 catch (Exception error)
@@ -112,7 +94,7 @@ namespace ProfilometerAutomation
             else
                 MessageBox.Show(message, caption, button);
 
-            return initialized;
+            
         }
 
         public void CloseController()

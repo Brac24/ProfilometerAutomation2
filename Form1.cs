@@ -22,9 +22,8 @@ namespace ProfilometerAutomation
 
         MotionController controller;
 
-      
+
         bool portsButtonClicked = false;
-        bool canReInit = false;
         string profResult = String.Empty;
 
         public Form1()
@@ -67,6 +66,13 @@ namespace ProfilometerAutomation
             controller.CommandController("DA offset");
             controller.CommandController("DA rotation");
             controller.CommandController("DA rStep");
+
+            comboBoxMeasurePoints.Enabled = false;
+            textBoxLengthBetweenPointsX.Enabled = false;
+            textBoxRotations.Enabled = false;
+            textBoxLengthBetweenPointsDegrees.Enabled = false;
+
+
 
 
         }
@@ -183,6 +189,7 @@ namespace ProfilometerAutomation
             int inches;
             int rotations;
             int rotationStep;
+            /*
             if (textBoxLengthBetweenPointsX != null)
             {
                 inches = int.Parse(textBoxLengthBetweenPointsX.Text);
@@ -195,8 +202,14 @@ namespace ProfilometerAutomation
                 rotations = 0;
                 rotationStep = 0;
             }
+            */
             
-            canReInit = controller.CheckProgramLoaded(comboBoxMeasurePoints.SelectedIndex+1,inches,rotations,rotationStep);
+            controller.CheckProgramLoaded();
+
+            comboBoxMeasurePoints.Enabled = true;
+            textBoxLengthBetweenPointsX.Enabled = true;
+            textBoxRotations.Enabled = true;
+            textBoxLengthBetweenPointsDegrees.Enabled = true;
         }
 
         private void rtbIncoming_TextChanged(object sender, EventArgs e)
@@ -330,13 +343,17 @@ namespace ProfilometerAutomation
         }
 
       
+        //Change in the motion controller size variable
         private void comboBoxMeasurePoints_TextChanged(object sender, EventArgs e)
         {
-            controller.CommandController("DA posA[0]");
-            controller.CommandController("DA posB[0]");
+            controller.CommandController("DA posA[0]");  //deallocate posA array
+            controller.CommandController("DA posB[0]");  //deallocate posB array
+            controller.CommandController("DA size[0]");
             controller.CommandController("size = " + comboBoxMeasurePoints.Text);
-            controller.CommandController("DM posA[size]");
-            controller.CommandController("DM posB[size]");
+            controller.CommandController("DM posA[size]"); //re-initialize posA
+            controller.CommandController("DM posB[size]"); //re-initialize posB
+            controller.CommandController("DM size[1]");
+            controller.CommandController("size[0] = size");
 
             //Add checks for anything possible or simply ignore certain keys
             if (comboBoxMeasurePoints.Text == "")
@@ -364,23 +381,19 @@ namespace ProfilometerAutomation
                     textBoxLengthBetweenPointsX.Text = "1"; //Set to minimum of 1 if 0
                 }
             }
-
-               
-            
-                
-
             else
                 textBoxLengthBetweenPointsX.Enabled = true;
         }
 
+        //Change in the motion controller offset variable
         private void textBoxLengthBetweenPointsX_TextChanged(object sender, EventArgs e)
         {
-            
-                controller.CommandController("offset = " + textBoxLengthBetweenPointsX.Text);
-           
+            controller.CommandController("offset = " + textBoxLengthBetweenPointsX.Text);
+            controller.CommandController("inches = offset*inch");
             
         }
 
+        //Change in the motion controller rotation variable
         private void textBoxRotations_TextChanged(object sender, EventArgs e)
         {
             if(textBoxRotations.Text == "")
@@ -407,8 +420,11 @@ namespace ProfilometerAutomation
             if(textBoxRotations.Text != "")
             {
                 controller.CommandController("DA posC[0]");
+                controller.CommandController("DA rotation[0]");
                 controller.CommandController("rotation = " + (Convert.ToInt32(textBoxRotations.Text) + 1));
                 controller.CommandController("DM posC[rotation]");
+                controller.CommandController("DM rotation[1]");
+                controller.CommandController("rotation[0] = rotation");
             }
             
 
@@ -416,6 +432,7 @@ namespace ProfilometerAutomation
 
         }
 
+        //Change in the motion controller rStep variable
         private void textBoxLengthBetweenPointsDegrees_TextChanged(object sender, EventArgs e)
         {
            
