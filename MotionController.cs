@@ -140,6 +140,7 @@ namespace ProfilometerAutomation
         public string CommandController(string command)
         {
             return gwComs1.GWCommand(ref command);
+            
         }
         
         /// <summary>

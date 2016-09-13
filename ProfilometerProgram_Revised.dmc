@@ -5,16 +5,14 @@ MG "Initializing Parameters"
 SP 80000,600000,50000;
 AC 10000,50000,50000;
 DC 10000,50000,50000;
-size=0;
-rotation=0;
+'variables: size, rotation, offset, and rStep
+'are initialized and declared through a controller command
+'in the Form1.cs file. Variables are updated from the form
 inch = 7055;   'Initializes and defines an inch in steps
-offset = 1;    'Will hold the user defined inches
 degree = 389;  'Initializes and defines 1 degree rotation in steps
 rev = 50000;
-rStep=0; 'How many degrees each rotations consists of
 i=0;
 j=0;
-MG "RESETTING POSITION"
 MG "Finished Initializing"
 EN
 
@@ -22,39 +20,11 @@ EN
 inches = offset*inch;  'Holds total steps needed for specified inches
 degrees = degree*rStep;
 rotation = rotation+1;  'Accounts for first position which doesnt rotate
-DM posA[size];
-DM posB[size];
-DM posC[rotation];
-MG "DONE1";
+'Arrays are also created and updated through the file Form1.cs
+'in its various methods. 
+'Arrays: posA[size], posB[size], posC[rotation]
+'is continuously updated in the windows form
 JP #JOYS
-EN
-
-#REINIT
-inches = offset*inch;
-degress = degree*rStep;
-rotation = rotation+1;
-DM posA[size];
-DM posB[size];
-DM posC[rotation];
-MG "DONE1";
-CB 5;
-JP #SETPOS1;
-EN
-
-
-#INITPOS
-a = 56;
-PR ,-600000;
-BG B;
-AM B;
-PA 0,0,0;
-BG C;
-AM C;
-BG A;
-AM A;
-BG B;
-AM B;
-MG "BACK TO INITIAL POSITION"
 EN
 
 
@@ -147,7 +117,6 @@ vinz = vinz + DBAND
 ENDIF
 ENDIF
 JS#SETPOS1,((@IN[17]=0)|(@OUT[02]));  'OUT[2] SET POS
-JS#REINIT,(((@IN[17]=0)|(@OUT[02])) & (@OUT[05])); 
 vinx=vinx*XSCALE
 viny=viny*YSCALE
 vinz=vinz*ZSCALE
@@ -155,9 +124,6 @@ JG vinx, viny, vinz
 JP#LOOP
 EN
 
-#SETPOS0
-MG "IT GOT IT"
-EN;
 'This will allow to set all points with JoyStick
 #SETPOS
 IF (i>size)
