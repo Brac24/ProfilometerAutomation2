@@ -377,23 +377,7 @@ namespace ProfilometerAutomation
         {
             
                 controller.CommandController("offset = " + textBoxLengthBetweenPointsX.Text);
-            
            
-            
-
-            /*
-            //When number is changed this command will re-initialize variable
-            //Remember to Error check to only allow numbers
-            //Also think about possibly putting a threshold lenght of inches
-            if(canReInit && textBoxLengthBetweenPointsX.Enabled)
-            {
-                controller.CommandController("offset = " + textBoxLengthBetweenPointsX);
-            }
-            else if(canReInit && !textBoxLengthBetweenPointsX.Enabled)
-            {
-                controller.CommandController("offset = 0");
-            }
-            */
             
         }
 
