@@ -362,13 +362,9 @@ namespace ProfilometerAutomation
             }
             else if (Convert.ToInt16(comboBoxMeasurePoints.Text) <= 1)
             {
-                //This check does not allow any X points less than 1
-                if(Convert.ToInt16(comboBoxMeasurePoints.Text) < 1)
-                {
+                
                     comboBoxMeasurePoints.Text = "1";
-                }
-
-
+                
                 textBoxLengthBetweenPointsX.Text = "0";          //This will change the offset variable in the controller to 0 since there is only 1 point
                 textBoxLengthBetweenPointsX.Enabled = false;     //Disable length between points because there is only 1 point in this case
             }
@@ -380,6 +376,7 @@ namespace ProfilometerAutomation
                 {
                     textBoxLengthBetweenPointsX.Text = "1"; //Set to minimum of 1 if 0
                 }
+                textBoxLengthBetweenPointsX.Enabled = true;
             }
             else
                 textBoxLengthBetweenPointsX.Enabled = true;
