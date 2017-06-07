@@ -162,7 +162,7 @@ namespace ProfilometerAutomation
             inMotion = true;                 //Acknowledges that controller is in motion
         }
 
-        //Make method that checks all inputs and does any necessary error checking
+        //TODO:Make method that checks all inputs and does any necessary error checking
         //before beginning program
   
 

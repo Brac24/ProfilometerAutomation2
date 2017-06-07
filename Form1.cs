@@ -253,8 +253,8 @@ namespace ProfilometerAutomation
             if (!controller.InMotion(e))
             {
                 System.Threading.Thread.Sleep(1000);
-                //profilometer.Start();               //Begin profilometer measurement
-                //profilometer.results(rtbIncoming); //Display contents of results to rich text box
+                profilometer.Start();               //Begin profilometer measurement
+                profilometer.results(rtbIncoming); //Display contents of results to rich text box
                 controller.Resume();               //Resume controller to next position
             }
         }

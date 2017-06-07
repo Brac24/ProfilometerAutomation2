@@ -37,6 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\galilwidgets_15\examples\cs\GWExample - Copy\GWExample\GalilWidgets.dll</HintPath>
     </Reference>
+    <Reference Include="Mitutoyo.MeasurLink.DeviceTerminal">
+      <HintPath>..\..\..\..\..\Downloads\measurlink-deviceterminal\Serial Terminal\Mitutoyo.MeasurLink.DeviceTerminal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />

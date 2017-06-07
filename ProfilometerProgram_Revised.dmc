@@ -75,9 +75,10 @@ MG "Set Your Points with the JoyStick";
 CB @OUT[1];
 JoyFlag = 1
 DBAND = .2
-XSCALE = 30000
-YSCALE = 100000
-ZSCALE = 100000
+xSCALE = 30000
+ySCALE = 100000
+zSCALE = 100000
+
 'AC300000,1000000,1000000
 'DC300000,1000000,1000000
 JG 0,0,0
@@ -117,9 +118,9 @@ vinz = vinz + DBAND
 ENDIF
 ENDIF
 JS#SETPOS1,((@IN[17]=0)|(@OUT[02]));  'OUT[2] SET POS
-vinx=vinx*XSCALE
-viny=viny*YSCALE
-vinz=vinz*ZSCALE
+vinx=vinx*xSCALE
+viny=viny*ySCALE
+vinz=vinz*zSCALE
 JG vinx, viny, vinz
 JP#LOOP
 EN
@@ -154,7 +155,7 @@ JP #SETAB, i<size[0];
 
 #SETC
 MG "SETTING C ",,j;
-posC[j] = _TDC+(j*degrees);
+posC[j] = _TDC+(j*degree);
 j = j+1;
 JP #SETC, j<rotation[0];
 i = 0;   'Program will begin at first A position recorded

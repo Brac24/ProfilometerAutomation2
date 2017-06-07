@@ -35,3 +35,4 @@ C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomati
 C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomation\ProfilometerAutomation2\obj\Debug\ProfilometerAutomation.Form1.resources
 C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomation\ProfilometerAutomation2\obj\Debug\ProfilometerAutomation.Properties.Resources.resources
 C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomation\ProfilometerAutomation2\obj\Debug\ProfilometerAutomation.csproj.GenerateResource.Cache
+C:\Users\cbracamontes\Documents\Visual Studio 2015\Projects\ProfilometerAutomation\ProfilometerAutomation2\bin\Debug\Mitutoyo.MeasurLink.DeviceTerminal.dll
